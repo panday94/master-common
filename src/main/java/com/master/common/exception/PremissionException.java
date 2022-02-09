@@ -1,0 +1,33 @@
+package com.master.common.exception;
+
+import com.master.common.enums.ResponseEnum;
+import lombok.Data;
+
+/**
+ * 权限不足异常
+ *
+ * @author: hxiang
+ * @date: 2020/3/4
+ * @version: 3.0.0
+ * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ */
+@Data
+public class PremissionException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
+    private Integer code;
+    private String msg;
+
+    public PremissionException() {
+        this.code = ResponseEnum.PERMISSION_DENIED.getCode();
+        this.msg = ResponseEnum.PERMISSION_DENIED.getMsg();
+    }
+
+    public PremissionException(String msg) {
+        super(msg);
+        this.code = ResponseEnum.PERMISSION_DENIED.getCode();
+        this.msg = msg;
+    }
+
+}
