@@ -1,18 +1,24 @@
 package com.master.common.utils;
 
+import com.master.common.constant.HttpConstant;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 获取实例bean
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2020/3/4
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -44,7 +50,7 @@ public class ApplicationContextUtil implements ApplicationContextAware {
      *
      * @return HttpServletRequest
      */
-    public static HttpServletRequest getHttpServletRequest() {
+    public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
             return null;
@@ -85,5 +91,23 @@ public class ApplicationContextUtil implements ApplicationContextAware {
         return getApplicationContext().getBean(name, clazz);
     }
 
+    /**
+     * 将字符串渲染到客户端
+     *
+     * @param response 渲染对象
+     * @param string   待渲染的字符串
+     */
+    public static void renderString(HttpServletResponse response, String string) {
+        try {
+            response.setStatus(HttpStatus.OK.value());
+            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, MediaType.ALL.getType());
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, MediaType.ALL.getType());
+            response.setHeader(HttpHeaders.CACHE_CONTROL, HttpConstant.NO_CACHE);
+            response.getWriter().print(string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

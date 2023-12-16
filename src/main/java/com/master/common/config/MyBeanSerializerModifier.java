@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.master.common.constant.StringPoolConstant;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -45,6 +46,9 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
                 writer.assignNullSerializer(new NullStringJsonSerializer());
             }
             if (isNumberType(writer)) {
+                if (BigDecimal.class.isAssignableFrom(writer.getType().getRawClass())) {
+                    writer.assignSerializer(new BigDecimalJsonSerializer());
+                }
                 writer.assignNullSerializer(new NullNumberJsonSerializer());
             }
             if (isBooleanType(writer)) {
@@ -78,6 +82,17 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
         @Override
         public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             jsonGenerator.writeString(StringPoolConstant.EMPTY);
+        }
+    }
+
+    /**
+     * 处理数值类型的null值
+     */
+    public static class BigDecimalJsonSerializer extends JsonSerializer<Object> {
+        @Override
+        public void serialize(Object value, JsonGenerator jsonGenerator,
+                              SerializerProvider serializerProvider) throws IOException {
+            jsonGenerator.writeString(value.toString());
         }
     }
 
@@ -118,8 +133,7 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
     public static class NullObjectJsonSerializer extends JsonSerializer<Object> {
         @Override
         public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            jsonGenerator.writeStartObject();
-            jsonGenerator.writeEndObject();
+            jsonGenerator.writeNull();
         }
     }
 

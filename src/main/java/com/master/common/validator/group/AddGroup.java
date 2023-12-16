@@ -2,7 +2,7 @@ package com.master.common.validator.group;
 
 /**
  * @description: 新增数据 Group
- * @author: hxiang
+ * @author: Yang
  * @date: 2019/8/16
  * @version: 3.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

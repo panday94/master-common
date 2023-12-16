@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 运行操作系统枚举
  *
- * @author: 葛盼
+ * @author: Yang
  * @date: 2021/3/22 10:27
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

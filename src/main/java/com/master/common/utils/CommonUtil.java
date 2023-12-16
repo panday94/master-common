@@ -1,11 +1,14 @@
 package com.master.common.utils;
 
+import cn.hutool.core.util.RandomUtil;
 import com.master.common.constant.StringPoolConstant;
 import com.master.common.validator.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * 通用处理工具类
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2019/8/28
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -145,6 +148,117 @@ public class CommonUtil {
         return ids;
     }
 
+    /**
+     * 姓名脱敏 只显示第一个汉字，其他隐藏为2个星号，比如：李**
+     *
+     * @param fullName 姓名
+     * @return
+     */
+    public static String nameEncrypt(String fullName) {
+        if (StringUtils.isBlank(fullName)) {
+            return fullName;
+        }
+        String name = StringUtils.left(fullName, 1);
+        return StringUtils.rightPad(name, StringUtils.length(fullName), "*");
+    }
+
+    /**
+     * 手机号码前三后四脱敏
+     *
+     * @param mobile 手机号
+     * @return
+     */
+    public static String mobileEncrypt(String mobile) {
+        if (ValidatorUtil.isNull(mobile) || (mobile.length() != 11)) {
+            return mobile;
+        }
+        return mobile.replaceAll("(\\d{3})\\d*(\\d{4})", "$1****$2");
+    }
+
+    /**
+     * 固定电话 后四位，其他隐藏，比如1234
+     *
+     * @param num
+     * @return
+     */
+    public static String phoneEncrypt(String phone) {
+        if (StringUtils.isBlank(phone)) {
+            return phone;
+        }
+        return StringUtils.leftPad(StringUtils.right(phone, 4), StringUtils.length(phone), "*");
+    }
+
+    /**
+     * 身份证前三后四脱敏
+     *
+     * @param id 身份证号
+     * @return
+     */
+    public static String idEncrypt(String id) {
+        if (ValidatorUtil.isNull(id) || (id.length() < 8)) {
+            return id;
+        }
+        return id.replaceAll("(?<=\\w{3})\\w(?=\\w{4})", "*");
+    }
+
+    /**
+     * 护照脱敏
+     *
+     * @param id
+     * @return
+     */
+    public static String passportEncrypt(String passport) {
+        if (ValidatorUtil.isNull(passport) || (passport.length() < 8)) {
+            return passport;
+        }
+        return passport.substring(0, 2) + new String(new char[passport.length() - 5]).replace("\0", "*") + passport.substring(passport.length() - 3);
+    }
+
+    /**
+     * 【地址】只显示到地区，不显示详细地址，比如：北京市海淀区****
+     *
+     * @param address
+     * @param sensitiveSize 敏感信息长度
+     * @return
+     */
+    public static String addressEncrypt(String address, int sensitiveSize) {
+        if (StringUtils.isBlank(address)) {
+            return "";
+        }
+        int length = StringUtils.length(address);
+        return StringUtils.rightPad(StringUtils.left(address, length - sensitiveSize), length, "*");
+    }
+
+    /**
+     * 电子邮箱 邮箱前缀仅显示第一个字母，前缀其他隐藏，用星号代替，@及后面的地址显示，比如：d**@126.com
+     *
+     * @param email 邮箱
+     * @return
+     */
+    public static String emailEncrypt(String email) {
+        if (StringUtils.isBlank(email)) {
+            return email;
+        }
+        int index = StringUtils.indexOf(email, "@");
+        if (index <= 1) {
+            return email;
+        } else {
+            return StringUtils.rightPad(StringUtils.left(email, 1), index, "*").concat(StringUtils.mid(email, index, StringUtils.length(email)));
+        }
+    }
+
+    /**
+     * 银行卡号前4位，后3位，其他用星号隐藏每位1个星号，比如：6217 **** **** **** 567>
+     *
+     * @param cardNum 银行卡号
+     * @return
+     */
+    public static String bankCardEncrypt(String cardNum) {
+        if (StringUtils.isBlank(cardNum)) {
+            return cardNum;
+        }
+        return StringUtils.left(cardNum, 4).concat(StringUtils.removeStart(StringUtils.leftPad(StringUtils.right(cardNum, 3), StringUtils.length(cardNum), "*"), "****"));
+    }
 
     /**
      * 字符串正则匹配
@@ -190,6 +304,39 @@ public class CommonUtil {
         tempArr[1] = DIGIT[mByte & 0X0F];
         String item = new String(tempArr);
         return item;
+    }
+
+    /**
+     * 抽奖方法
+     * create time: 2019/7/5 23:08
+     *
+     * @param orignalRates 商品中奖概率列表，保证顺序和实际物品对应
+     * @return 中奖商品索引
+     */
+    public static int lottery(List<Double> orignalRates) {
+        if (orignalRates == null || orignalRates.isEmpty()) {
+            return -1;
+        }
+        int size = orignalRates.size();
+
+        // 计算总概率，这样可以保证不一定总概率是1
+        double sumRate = 0d;
+        for (double rate : orignalRates) {
+            sumRate += rate;
+        }
+
+        // 计算每个物品在总概率的基础下的概率情况
+        List<Double> sortOrignalRates = new ArrayList<Double>(size);
+        Double tempSumRate = 0d;
+        for (double rate : orignalRates) {
+            tempSumRate += rate;
+            sortOrignalRates.add(tempSumRate / sumRate);
+        }
+        // 根据区块值来获取抽取到的物品索引
+        double nextDouble = Math.random();
+        sortOrignalRates.add(nextDouble);
+        Collections.sort(sortOrignalRates);
+        return sortOrignalRates.indexOf(nextDouble);
     }
 
 }

@@ -3,7 +3,7 @@ package com.master.common.enums;
 /**
  * 操作人类别
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2021/10/20
  * @version: 1.2.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

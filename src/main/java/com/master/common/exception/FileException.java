@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 文件处理异常
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2020/3/4
  * @version: 3.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -20,13 +20,13 @@ public class FileException extends RuntimeException {
     private String msg;
 
     public FileException() {
-        this.code = ResponseEnum.BUSINESS_ERROR.getCode();
-        this.msg = ResponseEnum.BUSINESS_ERROR.getMsg();
+        this.code = ResponseEnum.FILE_ERROR.getCode();
+        this.msg = ResponseEnum.FILE_ERROR.getMsg();
     }
 
     public FileException(String msg) {
         super(msg);
-        this.code = ResponseEnum.BUSINESS_ERROR.getCode();
+        this.code = ResponseEnum.FILE_ERROR.getCode();
         this.msg = msg;
     }
 

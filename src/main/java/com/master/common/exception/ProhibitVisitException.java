@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 账号认证失败异常
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2020/3/4
  * @version: 3.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

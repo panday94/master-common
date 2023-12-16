@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * hibernate-validator校验工具类
  * 参考文档：http://docs.jboss.org/hibernate/validator/5.4/reference/en-US/html_single/
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2019/8/16
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

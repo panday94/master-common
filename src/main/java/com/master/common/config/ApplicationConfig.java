@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 /**
  * 系统参数相关key
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2019/8/16
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

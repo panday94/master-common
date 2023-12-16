@@ -26,9 +26,9 @@ public enum OSEnum {
 
     LINUX(5, "linux");
 
-    private final Integer code;
+    private final Integer value;
 
-    private final String value;
+    private final String label;
 
     /**
      * 构造方法
@@ -36,9 +36,9 @@ public enum OSEnum {
      * @param code
      * @param value
      */
-    private OSEnum(final Integer code, final String value) {
-        this.code = code;
+    private OSEnum(final Integer value, final String label) {
         this.value = value;
+        this.label = label;
     }
 
     /**
@@ -47,10 +47,10 @@ public enum OSEnum {
      * @param code
      * @return
      */
-    public static String getVlue(Integer code) {
+    public static String getValue(Integer value) {
         for (OSEnum c : OSEnum.values()) {
-            if (c.getCode().equals(code)) {
-                return c.value;
+            if (c.getValue().equals(value)) {
+                return c.label;
             }
         }
         return null;
@@ -62,10 +62,10 @@ public enum OSEnum {
      * @param code
      * @return
      */
-    public static Integer getCode(String value) {
+    public static Integer getLabel(String label) {
         for (OSEnum c : OSEnum.values()) {
-            if (c.getValue().equals(value)) {
-                return c.code;
+            if (c.getLabel().equals(label)) {
+                return c.value;
             }
         }
         return null;

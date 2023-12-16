@@ -1,16 +1,13 @@
-package com.master.common.utils;
+package com.master.common.utils.file;
 
-import com.master.common.enums.ResponseEnum;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.extra.qrcode.QrCodeUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.UUID;
 
 /**
@@ -28,7 +25,6 @@ public class ImageUtil {
      */
     public static final String PATH = "/usr/local/src/upload/";
 
-
     /**
      * Base编码前缀 jpg
      */
@@ -40,134 +36,17 @@ public class ImageUtil {
     private static final String PNG_PREFIX = "data:image/png;base64,";
 
     /**
-     * 本地文件（图片、excel等）转换成Base64字符串
+     * 生成二维码返回base64
      *
-     * @param imgPath 文件路径
-     */
-    public static String convertFileToBase64(File file) {
-        return convertFileToBase64(FileUtil.getInputStream(file));
-    }
-
-    /**
-     * 本地文件（图片、excel等）转换成Base64字符串
-     *
-     * @param imgPath 文件路径
-     */
-    public static String convertFileToBase64(String imgPath) {
-        try {
-            InputStream in = new FileInputStream(imgPath);
-            return convertFileToBase64(in);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * 本地文件（图片、excel等）转换成Base64字符串
-     *
-     * @param imgPath 文件路径
-     */
-    public static String convertFileToBase64(InputStream in) {
-        byte[] data = null;
-        // 读取图片字节数组
-        try {
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // 对字节数组进行Base64编码，得到Base64编码的字符串
-        BASE64Encoder encoder = new BASE64Encoder();
-        String base64Str = encoder.encode(data);
-        return base64Str;
-    }
-
-    /**
-     * 将base64字符串，生成文件
-     *
-     * @param base64   base64文件
-     * @param filePath 文件存储路径
+     * @param codeUrl  二维码内容
      * @param fileName 文件名称
      */
-    public static File convertBase64ToFile(String base64, String filePath, String fileName) {
-        BufferedOutputStream bos = null;
-        FileOutputStream fos = null;
-        File file;
-        try {
-            File dir = new File(filePath);
-            //判断文件目录是否存在
-            if (!dir.exists() && dir.isDirectory()) {
-                dir.mkdirs();
-            }
-
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bfile = decoder.decodeBuffer(base64);
-
-            file = new File(filePath + File.separator + fileName);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            bos.write(bfile);
-            return file;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
+    public static String base64CodeUrl(String codeUrl, String path) {
+        File f = QrCodeUtil.generate(codeUrl, 300, 300, cn.hutool.core.io.FileUtil.file(path + "qrcode-" + UUID.randomUUID().toString() + ".png"));
+        String result = PNG_PREFIX + Base64.encode(f);
+        f.delete();
+        return result;
     }
-
-    /**
-     * 远程图片转File
-     *
-     * @param url     图片链接
-     * @param outPath 输出地址
-     * @return
-     */
-    public static File convertUrlToFile(String url, String filePath, String fileName) {
-        HttpURLConnection conn = null;
-        try {
-            conn = (HttpURLConnection) new URL(url).openConnection();
-            if (conn.getResponseCode() != ResponseEnum.SUCCESS.getCode().intValue()) {
-                return null;
-            }
-            File file = new File(filePath + fileName);
-            InputStream is = conn.getInputStream();
-            // 1K的数据缓冲
-            byte[] bs = new byte[1024];
-            // 读取到的数据长度
-            int len;
-            // 输出的文件流
-            FileOutputStream os = new FileOutputStream(file, true);
-            // 开始读取
-            while ((len = is.read(bs)) != -1) {
-                os.write(bs, 0, len);
-            }
-            os.close();
-            is.close();
-            return file;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            conn.disconnect();
-        }
-    }
-
 
     /**
      * 远程图片转BufferedImage
@@ -177,7 +56,7 @@ public class ImageUtil {
      * @return
      */
     public static BufferedImage convertUrlToBufferedImage(String url, String filePath, String fileName) {
-        File file = convertUrlToFile(url, filePath, fileName);
+        File file = FileUtil.convertUrlToFile(url, filePath, fileName);
         BufferedImage bufferedImg = toBufferedImage(file.getPath());
         return bufferedImg;
     }

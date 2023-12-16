@@ -14,23 +14,25 @@ import lombok.Getter;
 public enum PlatFormEnum {
 
     /**
-     * 类型：1->App；2->wechat；3->tiktok-cn；4->alipay；5->baidu；6->H5
+     * 类型：1-> web; 2->H5; 3->App；4->wechat；5->tiktok-cn；6->alipay；7->baidu；
      */
-    APP(1, "App"),
+    WEB(1, "H5"),
 
-    WECHAT(2, "wechat"),
+    H5(2, "H5"),
 
-    TIKTOK_CN(3, "tiktok-cn"),
+    APP(3, "App"),
 
-    ALIPAY(4, "alipay"),
+    WECHAT(4, "wechat"),
 
-    BAIDU(5, "baidu"),
+    TIKTOK_CN(5, "tiktok-cn"),
 
-    H5(6, "H5");
+    ALIPAY(6, "alipay"),
 
-    private final Integer code;
+    BAIDU(7, "baidu");
 
-    private final String value;
+    private final Integer value;
+
+    private final String label;
 
     /**
      * 构造方法
@@ -38,9 +40,9 @@ public enum PlatFormEnum {
      * @param code
      * @param value
      */
-    private PlatFormEnum(final Integer code, final String value) {
-        this.code = code;
+    private PlatFormEnum(final Integer value, final String label) {
         this.value = value;
+        this.label = label;
     }
 
     /**
@@ -49,10 +51,10 @@ public enum PlatFormEnum {
      * @param code
      * @return
      */
-    public static String getVlue(Integer code) {
+    public static String getLabel(Integer value) {
         for (PlatFormEnum c : PlatFormEnum.values()) {
-            if (c.getCode().equals(code)) {
-                return c.value;
+            if (c.getValue().equals(value)) {
+                return c.label;
             }
         }
         return null;
@@ -64,10 +66,10 @@ public enum PlatFormEnum {
      * @param value
      * @return
      */
-    public static Integer getValue(String value) {
+    public static Integer getValue(String label) {
         for (PlatFormEnum c : PlatFormEnum.values()) {
-            if (c.getValue().equals(value)) {
-                return c.code;
+            if (c.getLabel().equals(label)) {
+                return c.value;
             }
         }
         return null;

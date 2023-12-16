@@ -1,5 +1,6 @@
 package com.master.common.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.master.common.enums.ResponseEnum;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import java.io.Serializable;
 /**
  * 通用返回对象
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2020/11/18
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -45,6 +46,14 @@ public class ResponseInfo<T> implements Serializable {
         this.code = code;
         this.msg = msg;
         this.data = data;
+    }
+
+    /**
+     * 判断是否成功
+     */
+    @JsonIgnore
+    public Boolean isSuccess() {
+        return ResponseEnum.SUCCESS.getCode().equals(this.code);
     }
 
     /**
@@ -107,7 +116,7 @@ public class ResponseInfo<T> implements Serializable {
     /**
      * 权限不足返回
      */
-    public static ResponseInfo premissionDenied() {
+    public static ResponseInfo permissionDenied() {
         return new ResponseInfo(ResponseEnum.PERMISSION_DENIED.getCode(), ResponseEnum.PERMISSION_DENIED.getMsg());
     }
 
@@ -116,7 +125,7 @@ public class ResponseInfo<T> implements Serializable {
      *
      * @param msg 返回提示
      */
-    public static ResponseInfo premissionDenied(String msg) {
+    public static ResponseInfo permissionDenied(String msg) {
         return new ResponseInfo(ResponseEnum.PERMISSION_DENIED.getCode(), msg);
     }
 
@@ -239,6 +248,17 @@ public class ResponseInfo<T> implements Serializable {
      */
     public static ResponseInfo systemWarning(String message) {
         return new ResponseInfo(ResponseEnum.SYSTEM_WARNING.getCode(), message);
+    }
+
+    /**
+     * 自定义异常
+     *
+     * @param code 返回码
+     * @param msg  返回提示
+     * @param data 返回结果
+     */
+    public static ResponseInfo customizeError(ResponseEnum response) {
+        return new ResponseInfo(response.getCode(), response.getMsg());
     }
 
     /**

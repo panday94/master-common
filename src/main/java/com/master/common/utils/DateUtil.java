@@ -32,6 +32,8 @@ public class DateUtil {
     public static final String DATETIME_FORMATTER = "yyyy-MM-dd HH:mm:ss";
     public static final String DATETIME_ZONE_FORMATTER = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
+    public static final String DATE_FORMATTER_SLASH = "yyyy/MM/dd";
+
     public static final String DATE_FORMATTER_SHORT = "yyyyMMdd";
     public static final String YEAR_MONTH_FORMATTER_SHORT = "yyyyMM";
     public static final String TIME_FORMATTER_SHORT = "HHmmss";
@@ -681,6 +683,13 @@ public class DateUtil {
      */
     public static long intervalMillis(LocalDateTime startLocalDateTime, LocalDateTime endLocalDateTime) {
         return Duration.between(startLocalDateTime, endLocalDateTime).toMillis();
+    }
+
+    /**
+     * 相隔时间字符串
+     */
+    public static String intervalTimes(LocalDateTime startDate, LocalDateTime endDate) {
+        return intervalDays(startDate.toLocalDate(), endDate.toLocalDate()) + "天" + intervalHours(startDate, endDate) + "小时" + intervalMinutes(startDate, endDate) + "分钟";
     }
 
     /**

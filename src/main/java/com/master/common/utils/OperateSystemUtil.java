@@ -5,7 +5,7 @@ import com.master.common.enums.OperateSystemEnum;
 /**
  * 获取操作系统工具类
  *
- * @author: 葛盼
+ * @author: Yang
  * @date: 2021/3/22 10:27
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.

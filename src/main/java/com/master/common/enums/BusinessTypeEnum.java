@@ -3,12 +3,17 @@ package com.master.common.enums;
 /**
  * 业务操作类型
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2021/10/20
  * @version: 1.2.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
  */
 public enum BusinessTypeEnum {
+
+    /**
+     * 系统
+     */
+    SYSTEM,
 
     /**
      * 新增
@@ -24,6 +29,11 @@ public enum BusinessTypeEnum {
      * 删除
      */
     DELETE,
+
+    /**
+     * 审核
+     */
+    AUDIT,
 
     /**
      * 授权

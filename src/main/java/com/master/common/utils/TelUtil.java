@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * 通用处理工具类
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2021/8/13
  * @version: 1.2
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -118,6 +118,5 @@ public class TelUtil {
         }
         return buffer.toString();
     }
-
 
 }

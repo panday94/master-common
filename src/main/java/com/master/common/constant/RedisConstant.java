@@ -3,7 +3,7 @@ package com.master.common.constant;
 /**
  * redis常量类
  *
- * @author: hxiang
+ * @author: Yang
  * @date: 2020/3/4
  * @version: 1.0.0
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
@@ -44,5 +44,10 @@ public interface RedisConstant {
      * 失效时间 单位：（秒）一分钟
      */
     Long ONE_MINUTES = 60L;
+
+    /**
+     * 限流 redis key
+     */
+    String RATE_LIMIT_KEY = "rate_limit:";
 
 }

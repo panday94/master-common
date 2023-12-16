@@ -5,8 +5,8 @@
     <groupId>com.master</groupId>
     <artifactId>master-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>common</name>
-    <description>common</description>
+    <name>master-common</name>
+    <description>master开源项目基础包</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -14,30 +14,29 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
 
-        <commons.io.version>2.7</commons.io.version>
-        <commons-lang3.version>3.11</commons-lang3.version>
+        <commons.io.version>2.11.0</commons.io.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <httpclient.version>4.5.2</httpclient.version>
         <alibaba.fastjson.version>1.2.72</alibaba.fastjson.version>
+        <google.zxing.version>3.4.0</google.zxing.version>
         <hutool.version>5.6.5</hutool.version>
-        <dozer.version>6.5.0</dozer.version>
+        <dozer.version>6.5.2</dozer.version>
     </properties>
 
     <developers>
         <developer>
-            <name></name>
-            <email></email>
+            <name>江苏Master科技有限公司</name>
+            <email>7109571660@qq.com</email>
+            <organization>Master, Inc.</organization>
+            <organizationUrl>http://www.panday94.xyz</organizationUrl>
         </developer>
     </developers>
 
     <dependencies>
-        <!-- SpringBoot Web容器 -->
+        <!-- SpringBoot web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- SpringBoot aop -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <!-- 校验工具 -->
         <dependency>
@@ -49,12 +48,16 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- 常用工具类 -->
         <!--commons-流处理 -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
+        </dependency>
+        <!-- pool 连接池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
         <!--commons-lang3 -->
         <dependency>
@@ -62,11 +65,23 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+        <!-- httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
         <!--Alibaba fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${alibaba.fastjson.version}</version>
+        </dependency>
+        <!-- 谷歌二维码工具包 -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>${google.zxing.version}</version>
         </dependency>
         <!--Hutool Java工具包-->
         <dependency>
@@ -93,5 +108,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

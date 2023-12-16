@@ -1,6 +1,7 @@
 package com.master.common.api;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 整个应用通用的Command
@@ -29,6 +30,26 @@ public class CommonCommand implements Serializable {
      */
     private boolean needsOperator;
 
+    /**
+     * 操作ids
+     */
+    private List<Long> ids;
+
+    /**
+     * 操作id
+     */
+    private Long id;
+
+    /**
+     * 审核数据源id
+     */
+    private Long auditId;
+
+    /**
+     * 更新数据源id
+     */
+    private Long updateId;
+
     public String getOperater() {
         return this.operater;
     }
@@ -49,6 +70,42 @@ public class CommonCommand implements Serializable {
 
     public boolean isNeedsOperator() {
         return needsOperator;
+    }
+
+    public void setNeedsOperator(boolean needsOperator) {
+        this.needsOperator = needsOperator;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAuditId() {
+        return auditId;
+    }
+
+    public void setAuditId(Long auditId) {
+        this.auditId = auditId;
+    }
+
+    public Long getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Long updateId) {
+        this.updateId = updateId;
     }
 
 }

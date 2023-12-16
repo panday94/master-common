@@ -11,19 +11,29 @@ package com.master.common.constant;
 public interface AuthConstant {
 
     /**
-     * JWT存储权限前缀
+     * 登录类型
      */
-    String AUTHORITY_PREFIX = "ROLE_";
+    String GRANT_TYPE = "grant_type";
 
     /**
-     * JWT存储权限属性
+     * 授权码
      */
-    String AUTHORITY_CLAIM_NAME = "authorities";
+    String AUTHORIZATION_CODE = "authorization_code";
+
+    /**
+     * 刷新token
+     */
+    String REFRESH_TOKEN = "refresh_token";
 
     /**
      * 认证信息Http请求头
      */
     String JWT_TOKEN_HEADER = "Authorization";
+
+    /**
+     * 登录token
+     */
+    String TOKEN = "token";
 
     /**
      * JWT令牌前缀
@@ -56,19 +66,34 @@ public interface AuthConstant {
     String CLIENT_ID_KEY = "client_id";
 
     /**
+     * jwt客户端id
+     */
+    String CLIENTID_KEY = "client-id";
+
+    /**
      * jwt登录用户id
      */
     String USERID_KEY = "id";
 
     /**
-     * jwt登录客户端id
+     * jwt登录用户名
      */
-    String CLIENTID_KEY = "clientId";
+    String USERNAME_KEY = "username";
 
     /**
      * jwt登录用户名
      */
-    String USERNAME_KEY = "userName";
+    String PASSWORD_KEY = "password";
+
+    /**
+     * JWT存储权限属性
+     */
+    String AUTHORITY_CLAIM_NAME = "authorities";
+
+    /**
+     * JWT存储权限前缀
+     */
+    String AUTHORITY_PREFIX = "ROLE_";
 
     /**
      * JWT唯一标识
@@ -79,10 +104,5 @@ public interface AuthConstant {
      * JWT过期时间戳
      */
     String EXP = "exp";
-
-    /**
-     * 登录token
-     */
-    String TOKEN = "token";
 
 }

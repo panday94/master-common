@@ -12,6 +12,7 @@ import java.math.RoundingMode;
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
  */
 public class Arith {
+
     /**
      * 默认除法运算精度
      */

@@ -1,11 +1,15 @@
 package com.master.common.config;
 
+import com.master.common.utils.Threadsutil;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -19,6 +23,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 @EnableAsync
 public class ThreadPoolTaskConfig {
+
     /**
      * 核心线程数（默认线程数）
      */
@@ -44,7 +49,7 @@ public class ThreadPoolTaskConfig {
      */
     private static final String THREAD_NAME_PRE_FIX = "Async-Service-";
 
-    @Bean
+    @Bean(name = "asyncTaskExecutor")
     public TaskExecutor asyncTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(CORE_POOL_SIZE);
@@ -59,6 +64,21 @@ public class ThreadPoolTaskConfig {
         // 初始化
         executor.initialize();
         return executor;
+    }
+
+    /**
+     * 执行周期性或定时任务
+     */
+    @Bean(name = "scheduledExecutorService")
+    protected ScheduledExecutorService scheduledExecutorService() {
+        return new ScheduledThreadPoolExecutor(CORE_POOL_SIZE,
+                new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build()) {
+            @Override
+            protected void afterExecute(Runnable r, Throwable t) {
+                super.afterExecute(r, t);
+                Threadsutil.printException(r, t);
+            }
+        };
     }
 
 }

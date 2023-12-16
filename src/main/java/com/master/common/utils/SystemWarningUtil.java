@@ -111,7 +111,7 @@ public class SystemWarningUtil {
      * 系统异常推送
      */
     public static void systemError(SystemWarningConfig config, Exception e) {
-        systemError(config, ApplicationContextUtil.getHttpServletRequest().getRequestURI(), e);
+        systemError(config, ApplicationContextUtil.getRequest().getRequestURI(), e);
     }
 
     /**

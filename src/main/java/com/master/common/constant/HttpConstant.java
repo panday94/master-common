@@ -13,6 +13,11 @@ public interface HttpConstant {
     /**
      * all
      */
+    String SLASH = "/";
+
+    /**
+     * all
+     */
     String ALL = "/**";
 
     /**
@@ -25,8 +30,19 @@ public interface HttpConstant {
      */
     String HTTPS = "https://";
 
+    /**
+     * 成功
+     */
     String SUCCESS = "SUCCESS";
 
+    /**
+     * 错误
+     */
+    String FAIL = "FAIL";
+
+    /**
+     * 成功
+     */
     String OK = "OK";
 
     /**

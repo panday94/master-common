@@ -1,7 +1,9 @@
 package com.master.common.utils;
 
 import com.master.common.api.Tree;
+import com.master.common.enums.IntegerEnum;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,6 +17,10 @@ import java.util.stream.Collectors;
  * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
  */
 public class TreeUtil {
+
+    private static final String PID = "parentId";
+    private static final String ID = "id";
+    private static final String CHILDREN = "children";
 
     /**
      * 递归方法
@@ -32,8 +38,8 @@ public class TreeUtil {
                 }
         ).collect(Collectors.toList());
         return collect;
-
     }
+
 
     /**
      * 获取当前节点的所有子节点
@@ -48,6 +54,75 @@ public class TreeUtil {
         }).map(
                 (m) -> {
                     m.setChildren(getChildrens(m, all));
+                    return m;
+                }
+        ).collect(Collectors.toList());
+        return children;
+    }
+
+    /**
+     * 递归方法
+     * 必须有参数parentId和children
+     *
+     * @param cs 泛型
+     * @return
+     */
+    public static <T, S> List<T> tree(List<S> source, Class<T> cs) {
+        List<T> trees = DozerUtil.convertor(source, cs);
+        //获取父节点
+        List<T> collect = trees.stream().filter(m -> {
+            try {
+                Field field = m.getClass().getDeclaredField(PID);
+                field.setAccessible(true);
+                return Integer.valueOf(field.get(m).toString()).equals(IntegerEnum.ZERO.getValue());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).map(
+                (m) -> {
+                    try {
+                        Field field = m.getClass().getDeclaredField(CHILDREN);
+                        field.setAccessible(true);
+                        field.set(m, getChildrens(m, trees));
+                        return m;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return m;
+                }
+        ).collect(Collectors.toList());
+        return collect;
+    }
+
+    /**
+     * 获取当前节点的所有子节点
+     *
+     * @param pid
+     * @param cs
+     * @return
+     */
+    private static <T> List<T> getChildrens(T t, List<T> all) {
+        List<T> children = all.stream().filter(m -> {
+            try {
+                Field field = m.getClass().getDeclaredField(PID);
+                field.setAccessible(true);
+                Field fieldt = t.getClass().getDeclaredField(ID);
+                fieldt.setAccessible(true);
+                return Objects.equals(field.get(m), fieldt.get(t));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }).map(
+                (m) -> {
+                    try {
+                        Field field = m.getClass().getDeclaredField(CHILDREN);
+                        field.setAccessible(true);
+                        field.set(m, getChildrens(m, all));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return m;
                 }
         ).collect(Collectors.toList());
