@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.master</groupId>
     <artifactId>master-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.3.0</version>
     <name>master-common</name>
     <description>master开源项目基础包</description>
 
