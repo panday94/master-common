@@ -36,4 +36,4 @@ Master Common基础功能包，个人多年开发整理的包含Hutool及日常�
 
 [Apache License 2.0](./LICENSE)
 
-Copyright (c) 2022 Master Computer Corporation Limited All rights reserved
+Copyright (c) 2023 曜栋网络科技工作室 Limited All rights reserved

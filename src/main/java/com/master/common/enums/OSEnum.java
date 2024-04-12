@@ -6,9 +6,10 @@ import lombok.Getter;
  * 系统平台枚举类
  *
  * @author: Yang
- * @date: 2020/10/8
+ * @date: 2023/10/8
  * @version: 3.0.0
- * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Getter
 public enum OSEnum {

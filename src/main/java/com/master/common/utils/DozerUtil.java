@@ -13,9 +13,10 @@ import java.util.TreeSet;
  * 默认转换类
  *
  * @author: Yang
- * @date: 2020/12/24
+ * @date: 2023/12/24
  * @version: 1.0.0
- * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public class DozerUtil {
     /**

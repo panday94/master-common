@@ -17,9 +17,10 @@ import java.util.regex.Pattern;
  * 通用处理工具类
  *
  * @author: Yang
- * @date: 2019/8/28
+ * @date: 2023/8/28
  * @version: 1.0.0
- * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Slf4j
 public class CommonUtil {
@@ -29,7 +30,6 @@ public class CommonUtil {
     /**
      * 根据时间戳生成交易单号
      *
-     * @param shopId 店铺id
      * @param type   0：退款 1：支付 2:查询
      * @return 32位商户单号:20210615154740140470716103616151
      */
@@ -37,6 +37,26 @@ public class CommonUtil {
         String str = DateUtil.getCurrentDateTimeShort();
         StringBuffer sb = new StringBuffer();
         sb.append(str).append(String.valueOf(SnowFlakeUtil.snowflakeId()).substring(0, 16));
+        int sum = 0;
+        for (int i = 0; i < sb.length(); i++) {
+            sum = sum + Integer.valueOf(sb.substring(i, i + 1));
+        }
+        int s = sum % 9;
+        sb.append(s).append(type);
+        return sb.toString().trim();
+    }
+
+    /**
+     * 根据时间戳生成交易单号
+     *
+     * @param type   0：退款 1：支付 2:查询
+     * @param length 长度
+     * @return 32位商户单号:20210615154740140470716103616151
+     */
+    public static String getTransactionNumber(int type, int length) {
+        String str = DateUtil.getCurrentDateTimeShort();
+        StringBuffer sb = new StringBuffer();
+        sb.append(str).append(String.valueOf(SnowFlakeUtil.snowflakeId()).substring(0, length));
         int sum = 0;
         for (int i = 0; i < sb.length(); i++) {
             sum = sum + Integer.valueOf(sb.substring(i, i + 1));

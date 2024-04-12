@@ -7,9 +7,10 @@ import lombok.Data;
  * 账号认证失败异常
  *
  * @author: Yang
- * @date: 2020/3/4
+ * @date: 2023/3/4
  * @version: 3.0.0
- * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 @Data
 public class ProhibitVisitException extends RuntimeException {

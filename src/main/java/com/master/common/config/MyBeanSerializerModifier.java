@@ -24,9 +24,10 @@ import java.util.List;
  * 2.String类型值序列化为""
  *
  * @author: Yang
- * @date: 2020/12/29
+ * @date: 2023/12/29
  * @version: 1.0.0
- * Copyright Ⓒ 2021 Master Computer Corporation Limited All rights reserved.
+ * https://www.panday94.xyz
+ * Copyright Ⓒ 2023 曜栋网络科技工作室 Limited All rights reserved.
  */
 public class MyBeanSerializerModifier extends BeanSerializerModifier {
 
